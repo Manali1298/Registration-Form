@@ -26,18 +26,7 @@ namespace FinalProjectKendo.Controllers
 
             return View();
         }
-        public JsonResult GetstateData()
-        {
-            var state = repo.GetAllstate();
-            return Json(state, JsonRequestBehavior.AllowGet);
-        }
-        public JsonResult GetCityData(int id)
-        {
-            var album = repo.GetAllcity(id);
-
-            var jsonresult = Json(album, JsonRequestBehavior.AllowGet);
-            return jsonresult;
-        }
+       
         //code for register
         [AllowAnonymous]
         [HttpGet]
@@ -59,6 +48,7 @@ namespace FinalProjectKendo.Controllers
                 return View();
             }
         }
+        //code for login
         [AllowAnonymous]
         [HttpGet]
         public ActionResult LoginPanel()
@@ -81,6 +71,19 @@ namespace FinalProjectKendo.Controllers
                 return View();
             }
         }
+        //code for state and city dropdown
+         public JsonResult GetstateData()
+        {
+            var state = repo.GetAllstate();
+            return Json(state, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult GetCityData(int id)
+        {
+            var city = repo.GetAllcity(id);
+
+            var jsonresult = Json(city, JsonRequestBehavior.AllowGet);
+            return jsonresult;
+        }
         [Authorize]
         [HttpGet]
         public ActionResult SignOut(UserData model)
@@ -89,18 +92,7 @@ namespace FinalProjectKendo.Controllers
             return RedirectToAction("LoginPanel", "User");
 
         }
-        [HttpGet]
-        public ActionResult UserList()
-        {
-            return View();
-        }
-
         
-       
-        //public JsonResult GetSpecificUser(int id)
-        //{
-        //    var user = repo.GetUserDetails(id);
-        //    return Json(user, JsonRequestBehavior.AllowGet);
-        //}
+        
     }
 }
