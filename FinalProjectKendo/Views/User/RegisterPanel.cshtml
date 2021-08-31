@@ -1,0 +1,162 @@
+﻿@*@model FinalProjectKendo.Models.UserData*@
+
+@{
+    ViewBag.Title = "RegisterPanel";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<style>
+    #center1 {
+        margin: auto;
+        width: 60%;
+        padding: 10px;
+    }
+</style>
+
+<script>
+    var check = function () {
+        if (document.getElementById('password').value ==
+          document.getElementById('confirm_password').value) {
+            document.getElementById('message').style.color = 'green';
+            document.getElementById('message').innerHTML = 'Matched';
+        } else {
+            document.getElementById('message').style.color = 'red';
+            document.getElementById('message').innerHTML = 'Unmatched';
+        }
+    }
+</script>
+@*<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>*@
+<div class="mt-container pd-30">
+   
+    <div class="mt-container pd-0" id="center1">
+        <div class="form-login">
+            <form action="/User/RegisterPanel" method="post">
+                <h2>
+                    Register
+                </h2><div style="background-color:orangered;width:120px;height:4px;"></div>
+                <hr />
+                <br />
+                <div class="form-group">
+                    <label for="txtUsername">Name<span style="color:red">*</span></label>
+                    <div class="form-group-content">
+                        <input type="text" name="u_name" id="txtUsername" class="mt-input k-textbox" placeholder="John" required>
+                        <span class="input-bar"></span>
+                        </div>
+                    </div>
+                <div class="form-group">
+                    <label for="txtUsername">Email<span style="color:red">*</span></label>
+                    <div class="form-group-content">
+                        <input type="email" name="u_email" id="txtemail" pattern=".+" @@"globex.com" class="mt-input k-textbox" placeholder="john@gmail.com" required>
+                        <span class="input-bar"></span>
+                        </div>
+                    </div>
+                <div class="form-group">
+                    <label for="txtUsername">Mobile<span style="color:red">*</span></label>
+                    <div class="form-group-content">
+                        <input type="" name="u_mob" id="txtmob" pattern=".+"@@"^([0-9]{10})$" class="mt-input k-textbox" placeholder="9898989898" required>
+                        <span class="input-bar"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="txtUsername">State<span style="color:red">*</span></label>
+                    <div class="form-group-content">
+                        <input  name="state_name" id="state_dropdownlist" class="mt-input k-textbox" placeholder="--select state--" required>
+                        <span class="input-bar"></span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="txtUsername">City<span style="color:red">*</span></label>
+                    <div class="form-group-content">
+                        <input  name="city_name" value="#:state_id#"  id="city_dropdownlist" class="mt-input k-textbox" placeholder="--select city--" required>
+                        <span class="input-bar"></span>
+
+                    </div>
+                </div>
+
+
+
+                <div class="form-group">
+                    <label for="password">Password<span style="color:red">*</span></label>
+                    <div class="form-group-content">
+                        <input type="password" name="u_password" id="password" class="mt-input k-textbox" onkeyup='check();' required>
+                        <span class="input-bar"></span>
+                        </div>
+                    </div>
+                <div class="form-group">
+                    <label>Confirm Password<span style="color:red">*</span></label>
+                    <div class="form-group-content">
+                        <input type="password" name="confirm_password" id="confirm_password" onkeyup='check();' class="mt-input k-textbox" required>
+                        <span id='message' class="input-bar"></span>
+                        </div>
+                    </div>
+                <div class="form-group">
+                    <div class="form-group-content">
+                        <button class="btn k-primary btn-sm k-button btn-raised">Sign Up</button>
+                    </div>
+                </div>
+                <div><a class="k-link" href="@Url.Action("LoginPanel","User")">Already User ?..Sign-In</a></div>
+            </form>
+        </div>
+    </div>
+    </div>
+<style>
+    .k-readonly {
+        color: gray;
+    }
+</style>
+
+<script>
+     // var cityid = $(element).attr('data-id');
+        $(document).ready(function() {
+            var state = $("#state_dropdownlist").kendoDropDownList({
+                index: 0,
+                dataTextField: "state_name",
+                dataValueField: "state_id",
+                optionLabel: "Select state...",
+                 
+                
+                dataSource: {
+                    serverFiltering: true,
+
+                    transport: {
+                        read: "http://localhost:58979/User/GetstateData"
+                    }
+                }
+            }).data("kendoDropDownList");
+            var city = $("#city_dropdownlist").kendoDropDownList({
+                autoBind: false,
+                cascadeFrom: "state",
+                optionLabel: "Select city...",
+                dataTextField: "city_name",
+                dataValueField: "city_id",
+                dataSource: {
+                    serverFiltering: true,
+                    transport: {
+                        read: "http://localhost:58979/User/GetCityData?id=#:state_id#"
+                    }
+                }
+            }).data("kendoDropDownList");
+           
+
+        });
+        //var cityid = $(element).attr('data-id');
+
+        //$(document).ready(function () {
+        //    $("#dropdownlist1").kendoDropDownList({
+        //        index: 0,
+        //        dataTextField: "city_name",
+        //        dataValueField: "city_id",
+        //        cascadeFrom: "dropdownlist",
+        //        optionLabel: "Select city...",
+
+        //        dataSource: {
+        //            transport: {
+        //                read: "http://localhost:58979/User/GetCityData/2"
+        //            }
+        //        }
+        //    });
+        //});
+</script>
